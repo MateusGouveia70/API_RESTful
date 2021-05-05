@@ -31,6 +31,7 @@ namespace API_RESTful
         {
 
             services.AddControllers();
+            services.AddApiVersioning();
 
             var connection = Configuration["MySQLConnection:MySQLConnectionString"];
 

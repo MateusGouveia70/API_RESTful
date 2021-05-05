@@ -8,8 +8,9 @@ using System.Threading.Tasks;
 
 namespace API_RESTful.Controllers
 {
+    [ApiVersion("1.0")]
     [ApiController]
-    [Route("api/[controller]")]
+    [Route("api/[controller]/v{version:ApiVersion}")]
     public class PersonController : ControllerBase
     {
 
