@@ -1,7 +1,11 @@
+using API_RESTful.Business;
+using API_RESTful.Business.Implementation;
+using API_RESTful.Model.MyContext;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
 using Microsoft.AspNetCore.HttpsPolicy;
 using Microsoft.AspNetCore.Mvc;
+using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
@@ -27,6 +31,12 @@ namespace API_RESTful
         {
 
             services.AddControllers();
+
+            var connection = Configuration["MySQLConnection:MySQLConnectionString"];
+
+            services.AddDbContext<MySQLContext>(options => options.UseMySql(connection));
+
+            services.AddScoped<IPersonbusiness, PersonBusiness>();
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
@@ -36,6 +46,8 @@ namespace API_RESTful
             {
                 app.UseDeveloperExceptionPage();
             }
+
+           
 
             app.UseHttpsRedirection();
 
