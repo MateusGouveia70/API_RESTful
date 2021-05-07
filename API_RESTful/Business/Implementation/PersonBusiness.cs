@@ -1,5 +1,6 @@
 ﻿using API_RESTful.Model;
 using API_RESTful.Model.MyContext;
+using API_RESTful.Repository;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -9,36 +10,39 @@ namespace API_RESTful.Business.Implementation
 {
     public class PersonBusiness : IPersonbusiness
     {
-        private MySQLContext _context;
+        private IGenericRepository<Person> _repository;
 
-        public PersonBusiness(MySQLContext context)
+
+        public PersonBusiness(IGenericRepository<Person> reposiroty)
         {
-            _context = context;
+            _repository = reposiroty;
         }
 
         public Person Create(Person person)
         {
-            throw new NotImplementedException();
+
+            return _repository.Create(person);
+
         }
 
         public void Delete(int id)
         {
-            throw new NotImplementedException();
+            _repository.Delete(id);
         }
 
         public List<Person> FindAll()
         {
-            return _context.persons.ToList();
+            return _repository.FindAll();
         }
 
         public Person FindById(int id)
         {
-            throw new NotImplementedException();
+            return _repository.FindById(id);
         }
 
         public Person Update(Person person)
         {
-            throw new NotImplementedException();
+            return _repository.Update(person);
         }
     }
 }
