@@ -1,4 +1,6 @@
-﻿using API_RESTful.Model;
+﻿using API_RESTful.Data.Converter.Implementation;
+using API_RESTful.Data.VO;
+using API_RESTful.Model;
 using API_RESTful.Model.MyContext;
 using API_RESTful.Repository;
 using System;
@@ -12,16 +14,20 @@ namespace API_RESTful.Business.Implementation
     {
         private IGenericRepository<Person> _repository;
 
+        private readonly PersonConverter _converter;
+
 
         public PersonBusiness(IGenericRepository<Person> reposiroty)
         {
             _repository = reposiroty;
+            _converter = new PersonConverter();
         }
 
-        public Person Create(Person person)
+        public PersonVO Create(PersonVO person)
         {
-
-            return _repository.Create(person);
+            var personEntity = _converter.Parse(person);
+            personEntity = _repository.Create(personEntity);
+            return _converter.Parse(personEntity);
 
         }
 
@@ -30,19 +36,22 @@ namespace API_RESTful.Business.Implementation
             _repository.Delete(id);
         }
 
-        public List<Person> FindAll()
+        public List<PersonVO> FindAll()
         {
-            return _repository.FindAll();
+            return _converter.Parse(_repository.FindAll());
         }
 
-        public Person FindById(int id)
+        public PersonVO FindById(int id)
         {
-            return _repository.FindById(id);
-        } 
+            return  _converter.Parse(_repository.FindById(id));
+           
+        }
 
-        public Person Update(Person person)
+        public PersonVO Update(PersonVO person)
         {
-            return _repository.Update(person);
+            var personEntity = _converter.Parse(person);
+            personEntity = _repository.Update(personEntity);
+            return _converter.Parse(personEntity);
         }
     }
 }
