@@ -81,6 +81,7 @@ namespace API_RESTful.Repository.Implementation
                 try
                 {
                     dataset.Remove(result);
+                    _context.SaveChanges();
                 }
                 catch (Exception)
                 {

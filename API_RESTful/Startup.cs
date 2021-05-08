@@ -1,6 +1,9 @@
 using API_RESTful.Business;
 using API_RESTful.Business.Implementation;
+using API_RESTful.Model;
 using API_RESTful.Model.MyContext;
+using API_RESTful.Repository;
+using API_RESTful.Repository.Implementation;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
 using Microsoft.AspNetCore.HttpsPolicy;
@@ -52,6 +55,8 @@ namespace API_RESTful
             services.AddDbContext<MySQLContext>(options => options.UseMySql(connection));
 
             services.AddScoped<IPersonbusiness, PersonBusiness>();
+
+            services.AddScoped<IGenericRepository<Person>, GenericRepository<Person>>();
         }
 
       

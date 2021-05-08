@@ -38,7 +38,7 @@ namespace API_RESTful.Business.Implementation
         public Person FindById(int id)
         {
             return _repository.FindById(id);
-        }
+        } 
 
         public Person Update(Person person)
         {

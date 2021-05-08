@@ -14,7 +14,7 @@ namespace API_RESTful.Model
         [Column("first_name")]
         public string firstName { get; set; }
         [Column("last_name")]
-        public int lastName { get; set; }
+        public string lastName { get; set; }
         [Column("age")]
         public int Age { get; set; }
         [Column("gender")]

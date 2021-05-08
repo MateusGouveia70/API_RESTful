@@ -15,8 +15,4 @@
     <PackageReference Include="Serilog.Sinks.Console" Version="4.0.0-dev-00831" />
   </ItemGroup>
 
-  <ItemGroup>
-    <Folder Include="Model\Script\" />
-  </ItemGroup>
-
 </Project>
