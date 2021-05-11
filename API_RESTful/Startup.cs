@@ -1,5 +1,7 @@
 using API_RESTful.Business;
 using API_RESTful.Business.Implementation;
+using API_RESTful.HiperMedia.Enricher;
+using API_RESTful.HiperMedia.Filters;
 using API_RESTful.Model;
 using API_RESTful.Model.MyContext;
 using API_RESTful.Repository;
@@ -25,6 +27,7 @@ namespace API_RESTful
     public class Startup
     {
         public IWebHostEnvironment Environment { get; }
+        public IConfiguration Configuration { get; }
 
         public Startup(IConfiguration configuration, IWebHostEnvironment environment)
         {
@@ -37,14 +40,14 @@ namespace API_RESTful
 
         }
 
-        public IConfiguration Configuration { get; }
+       
 
         // This method gets called by the runtime. Use this method to add services to the container.
         public void ConfigureServices(IServiceCollection services)
         {
 
             services.AddControllers();
-            services.AddApiVersioning();
+           
 
             var connection = Configuration["MySQLConnection:MySQLConnectionString"];
 
@@ -63,9 +66,15 @@ namespace API_RESTful
 
             .AddXmlSerializerFormatters();
 
-           
-           
-            
+            var filterOptions = new HyperMediaFilterOptions();
+            filterOptions.ContentResponseEnricherList.Add(new PersonEnricher());
+
+            services.AddSingleton(filterOptions);
+
+
+
+            services.AddApiVersioning();
+
 
             services.AddDbContext<MySQLContext>(options => options.UseMySql(connection));
 
@@ -95,6 +104,7 @@ namespace API_RESTful
             app.UseEndpoints(endpoints =>
             {
                 endpoints.MapControllers();
+                endpoints.MapControllerRoute("DefaultApi", "{controller=values}/{id?}");
             });
         }
 

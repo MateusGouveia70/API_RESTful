@@ -1,18 +1,14 @@
 ﻿using API_RESTful.Business;
 using API_RESTful.Data.VO;
-using API_RESTful.Model;
+using API_RESTful.HiperMedia.Filters;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.Extensions.Logging;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Threading.Tasks;
 
 namespace API_RESTful.Controllers
 {
-    [ApiVersion("1.0")]
+    [ApiVersion("1")]
     [ApiController]
-    [Route("api/[controller]/v{version:ApiVersion}")]
+    [Route("api/[controller]/v{version:apiVersion}")]
     public class PersonController : ControllerBase
     {
 
@@ -28,12 +24,15 @@ namespace API_RESTful.Controllers
         }
 
         [HttpGet]
+        [TypeFilter(typeof(HyperMediaFilter))]
         public IActionResult Get()
         {
             return Ok(_personBusiness.FindAll());
         }
 
         [HttpGet("{id}")]
+        [TypeFilter(typeof(HyperMediaFilter))]
+
         public IActionResult Get(int id)
         {
             var result = _personBusiness.FindById(id);
@@ -42,6 +41,8 @@ namespace API_RESTful.Controllers
         }
 
         [HttpPost]
+        [TypeFilter(typeof(HyperMediaFilter))]
+
         public IActionResult Post([FromBody] PersonVO person)
         {
             if (person == null) return BadRequest();
@@ -49,6 +50,8 @@ namespace API_RESTful.Controllers
         }
 
         [HttpPut]
+        [TypeFilter(typeof(HyperMediaFilter))]
+
         public IActionResult Put([FromBody] PersonVO person)
         {
             if (person == null) return BadRequest();
